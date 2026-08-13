@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --aws-header-bg: #232f3e;
+  --aws-header-nav-bg: #161e2d;
+  --aws-blue: #0972d3;
+  --aws-blue-hover: #033160;
+  --aws-bg: #f2f3f3;
+  --aws-card-bg: #ffffff;
+  --aws-border: #e9ebed;
+  --aws-border-dark: #d5dbdb;
+  --aws-table-header: #fafafa;
+  --aws-text-main: #000716;
+  --aws-text-sec: #5f6b7a;
+  --aws-green: #037f0c;
+  --aws-green-bg: #f1fdf1;
+  --aws-red: #d91515;
+  --aws-red-bg: #fdf2f2;
+}
+
+.dark {
+  color-scheme: dark;
+  --aws-bg: #0f1b2a;
+  --aws-card-bg: #192534;
+  --aws-border: #2b3a4e;
+  --aws-border-dark: #37485d;
+  --aws-table-header: #15202e;
+  --aws-text-main: #f3f4f6;
+  --aws-text-sec: #9ca3af;
+}
+
+@theme {
+  --font-sans: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-aws-header: var(--aws-header-bg);
+  --color-aws-header-nav: var(--aws-header-nav-bg);
+  --color-aws-blue: var(--aws-blue);
+  --color-aws-blue-hover: var(--aws-blue-hover);
+  --color-aws-bg: var(--aws-bg);
+  --color-aws-border: var(--aws-border);
+  --color-aws-border-dark: var(--aws-border-dark);
+  --color-aws-table-header: var(--aws-table-header);
+  --color-aws-text: var(--aws-text-main);
+  --color-aws-text-sec: var(--aws-text-sec);
+  --color-aws-green: var(--aws-green);
+  --color-aws-red: var(--aws-red);
+}
+
+body {
+  background-color: var(--aws-bg);
+  color: var(--aws-text-main);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* AWS Console Custom Scrollbars & Input styles */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  font-size: 15.5px;
+}
+
+/* Custom Toast styles */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================
+   AWS CONSOLE DARK MODE OVERRIDES
+   ========================================== */
+.dark body {
+  background-color: #0f1b2a !important;
+  color: #f3f4f6 !important;
+}
+
+/* Background Overrides in Dark Mode */
+.dark .bg-white {
+  background-color: #192534 !important;
+  color: #f3f4f6 !important;
+}
+
+.dark .bg-\[\#fafafa\],
+.dark .bg-\[\#f2f3f3\],
+.dark .bg-gray-50 {
+  background-color: #15202e !important;
+  color: #d1d5db !important;
+}
+
+.dark .bg-\[\#ffffff\] {
+  background-color: #0f1b2a !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #243346 !important;
+}
+
+/* Border Overrides in Dark Mode */
+.dark .border-\[\#7d8998\],
+.dark .border-\[\#e9ebed\],
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: #2b3a4e !important;
+}
+
+/* Text Overrides in Dark Mode */
+.dark .text-\[\#000716\],
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700 {
+  color: #f3f4f6 !important;
+}
+
+.dark .text-\[\#5f6b7a\],
+.dark .text-gray-500,
+.dark .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+/* Form Inputs & Selects in Dark Mode */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="number"],
+.dark textarea,
+.dark select {
+  background-color: #15202e !important;
+  color: #f3f4f6 !important;
+  border-color: #37485d !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Data Table Row Hover & Active Selection */
+.dark table thead tr {
+  background-color: #15202e !important;
+  border-color: #2b3a4e !important;
+}
+
+.dark table tbody tr:hover {
+  background-color: #243346 !important;
+}
+
+.dark table tbody tr.bg-\[\#e6f2fd\] {
+  background-color: #1c324a !important;
+}

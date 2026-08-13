@@ -3,6 +3,7 @@ import './globals.css';
 import { AuthProvider } from '@/lib/auth';
 import { ToastProvider } from '@/lib/toast';
 import { ThemeProvider } from '@/lib/theme';
+import { BackendWarmup } from '@/components/aws/BackendWarmup';
 
 export const metadata: Metadata = {
   title: 'AWS Route 53 Console Clone',
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <AuthProvider>
-            <ToastProvider>{children}</ToastProvider>
+            <ToastProvider>
+              <BackendWarmup>{children}</BackendWarmup>
+            </ToastProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

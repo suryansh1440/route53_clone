@@ -6,8 +6,13 @@ from app.config import CORS_ORIGINS
 from app.database import engine, Base
 from app.routers import auth, hosted_zones, records
 
-# Create all tables
+# Create all tables & auto-seed initial data
 Base.metadata.create_all(bind=engine)
+try:
+    from seed import seed
+    seed()
+except Exception as e:
+    print(f"Auto-seed status: {e}")
 
 app = FastAPI(
     title="Route 53 Clone API",

@@ -1,13 +1,14 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, LoginCredentials } from '@/types/auth';
+import { User, LoginCredentials, RegisterCredentials } from '@/types/auth';
 import { apiFetch, ApiError } from '@/lib/api';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
+  register: (credentials: RegisterCredentials) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
@@ -44,6 +45,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(data);
   };
 
+  const register = async (credentials: RegisterCredentials) => {
+    const data = await apiFetch<User & { token?: string }>('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
+    if (data.token) {
+      localStorage.setItem('aws_auth_token', data.token);
+    }
+    setUser(data);
+  };
+
   const logout = async () => {
     try {
       await apiFetch('/api/auth/logout', { method: 'POST' });
@@ -54,7 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );

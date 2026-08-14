@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, Response, Request
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.auth import LoginRequest, UserResponse
-from app.services.auth_service import authenticate_user, get_user_by_id
+from app.schemas.auth import LoginRequest, RegisterRequest, UserResponse
+from app.services.auth_service import authenticate_user, register_user, get_user_by_id
 from app.utils.security import create_session_token, get_session_user_id
 from app.config import COOKIE_NAME, COOKIE_MAX_AGE
 
@@ -14,6 +14,27 @@ router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 def login(data: LoginRequest, response: Response, db: Session = Depends(get_db)):
     """Login with email and password. Sets session cookie and returns session token."""
     user = authenticate_user(db, data.email, data.password)
+    token = create_session_token(user.id)
+    response.set_cookie(
+        key=COOKIE_NAME,
+        value=token,
+        max_age=COOKIE_MAX_AGE,
+        httponly=True,
+        samesite="none",
+        secure=True,
+    )
+    return UserResponse(
+        id=user.id,
+        email=user.email,
+        name=user.name,
+        token=token
+    )
+
+
+@router.post("/register", response_model=UserResponse)
+def register(data: RegisterRequest, response: Response, db: Session = Depends(get_db)):
+    """Register a new user account, set session cookie, and return session token."""
+    user = register_user(db, data.name, data.email, data.password)
     token = create_session_token(user.id)
     response.set_cookie(
         key=COOKIE_NAME,

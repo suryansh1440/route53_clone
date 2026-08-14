@@ -6,6 +6,7 @@ import { useAuth } from '@/lib/auth';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { ApiError } from '@/lib/api';
+import Link from 'next/link';
 import { Lock, ShieldCheck, Key, User, CheckCircle2, Globe, Server, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
@@ -185,6 +186,16 @@ export default function LoginPage() {
                   <span className="font-bold text-[#000716] dark:text-white">admin123</span>
                 </div>
               </div>
+            </div>
+
+            {/* Create Account Link */}
+            <div className="mt-5 text-center">
+              <p className="text-xs text-[#5f6b7a] dark:text-gray-400">
+                New to AWS Route 53?{' '}
+                <Link href="/register" className="text-[#0972d3] font-bold hover:underline">
+                  Create a new AWS account
+                </Link>
+              </p>
             </div>
           </div>
 

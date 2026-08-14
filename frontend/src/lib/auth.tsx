@@ -34,10 +34,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (credentials: LoginCredentials) => {
-    const data = await apiFetch<User>('/api/auth/login', {
+    const data = await apiFetch<User & { token?: string }>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
+    if (data.token) {
+      localStorage.setItem('aws_auth_token', data.token);
+    }
     setUser(data);
   };
 
@@ -45,6 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await apiFetch('/api/auth/logout', { method: 'POST' });
     } finally {
+      localStorage.removeItem('aws_auth_token');
       setUser(null);
     }
   };

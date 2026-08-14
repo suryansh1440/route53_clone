@@ -10,5 +10,6 @@ class UserResponse(BaseModel):
     id: int
     email: str
     name: str
+    token: str | None = None
 
     model_config = {"from_attributes": True}

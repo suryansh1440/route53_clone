@@ -31,8 +31,13 @@ def verify_session_token(token: str, max_age: int = 60 * 60 * 24 * 7) -> dict | 
 
 
 def get_session_user_id(request: Request) -> int:
-    """Extract user ID from session cookie. Raises 401 if invalid."""
+    """Extract user ID from session cookie or Authorization header. Raises 401 if invalid."""
     token = request.cookies.get(COOKIE_NAME)
+    if not token:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            token = auth_header.split(" ")[1]
+
     if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
 

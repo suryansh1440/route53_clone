@@ -20,9 +20,15 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const url = endpoint.startsWith('http') ? endpoint : `${API_BASE}${endpoint}`;
 
-  const defaultHeaders: HeadersInit = {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('aws_auth_token') : null;
+
+  const defaultHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
   };
+
+  if (token) {
+    defaultHeaders['Authorization'] = `Bearer ${token}`;
+  }
 
   const config: RequestInit = {
     ...options,

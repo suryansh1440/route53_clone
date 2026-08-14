@@ -95,16 +95,29 @@ export function ImportBindModal({
 
         {/* Textarea */}
         <div className="flex flex-col gap-1">
-          <label className="font-semibold text-[#000716] flex items-center gap-1">
-            <FileText className="w-3.5 h-3.5 text-gray-500" />
-            <span>Zone File Contents</span>
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="font-semibold text-[#000716] flex items-center gap-1">
+              <FileText className="w-3.5 h-3.5 text-gray-500" />
+              <span>Zone File Contents</span>
+            </label>
+            <button
+              type="button"
+              onClick={() =>
+                setBindText(
+                  `$ORIGIN ${zoneName}.\n$TTL 300\n\n; Sample RFC 1035 BIND Zone File\n@       IN  A     192.168.1.10\napi     IN  A     192.168.1.20\nwww     IN  CNAME ${zoneName}.\nmail    IN  MX    10 mail.${zoneName}.\nmail    IN  A     192.168.1.30\n@       IN  TXT   "v=spf1 include:_spf.google.com ~all"\n_sip._tcp IN SRV 10 5 5060 sip.${zoneName}.\n@       IN  CAA   0 issue "letsencrypt.org"`
+                )
+              }
+              className="text-[11px] font-bold text-[#0972d3] hover:underline flex items-center gap-1"
+            >
+              <span>+ Load Sample .zone Data</span>
+            </button>
+          </div>
           <textarea
             rows={8}
             value={bindText}
             onChange={(e) => setBindText(e.target.value)}
             placeholder={`$ORIGIN ${zoneName}.\n$TTL 300\n@ IN A 192.168.1.10\nwww IN CNAME @\nmail IN MX 10 mail.${zoneName}.`}
-            className="w-full px-3 py-2 bg-white border border-[#7d8998] rounded-md font-mono text-xs text-[#000716] focus:outline-none focus:ring-2 focus:ring-[#0972d3]"
+            className="w-full px-3 py-2 bg-white dark:bg-[#15202e] border border-[#7d8998] dark:border-[#2b3a4e] rounded-md font-mono text-xs text-[#000716] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0972d3]"
           />
         </div>
 

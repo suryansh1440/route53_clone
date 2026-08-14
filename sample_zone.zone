@@ -1,0 +1,41 @@
+$ORIGIN example.com.
+$TTL 300
+
+; SOA Record
+@       IN  SOA   ns-384.awsdns-48.com. awsdns-hostmaster.amazon.com. (
+                  1          ; Serial
+                  7200       ; Refresh
+                  900        ; Retry
+                  1209600    ; Expire
+                  86400 )    ; Minimum TTL
+
+; Name Server Records
+@       IN  NS    ns-384.awsdns-48.com.
+@       IN  NS    ns-712.awsdns-31.net.
+@       IN  NS    ns-1536.awsdns-62.org.
+@       IN  NS    ns-204.awsdns-25.co.uk.
+
+; IPv4 Address Records (A)
+@       IN  A     192.168.1.10
+api     IN  A     192.168.1.20
+mail    IN  A     192.168.1.30
+
+; IPv6 Address Records (AAAA)
+@       IN  AAAA  2001:0db8:85a3:0000:0000:8a2e:0370:7334
+
+; Canonical Name Records (CNAME)
+www     IN  CNAME example.com.
+app     IN  CNAME www.example.com.
+
+; Mail Exchange Records (MX)
+@       IN  MX    10 mail.example.com.
+
+; Text Records (TXT)
+@       IN  TXT   "v=spf1 include:_spf.google.com ~all"
+_dmarc  IN  TXT   "v=DMARC1; p=reject; sp=reject; adkim=r; aspf=r;"
+
+; Service Locator Records (SRV)
+_sip._tcp IN SRV  10 5 5060 sip.example.com.
+
+; Certification Authority Authorization Records (CAA)
+@       IN  CAA   0 issue "letsencrypt.org"

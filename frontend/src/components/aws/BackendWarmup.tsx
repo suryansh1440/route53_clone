@@ -22,9 +22,15 @@ export function BackendWarmup({ children }: { children: React.ReactNode }) {
 
     const checkHealth = async () => {
       try {
-        const url = `${API_BASE}/api/health`;
-        const res = await fetch(url, { credentials: 'include' });
-        if (res.ok) {
+        const primaryUrl = '/api/health';
+        const fallbackUrl = API_BASE ? `${API_BASE.replace(/\/$/, '')}/api/health` : '/api/health';
+        
+        let res = await fetch(primaryUrl, { credentials: 'include' }).catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch(fallbackUrl, { credentials: 'include' }).catch(() => null);
+        }
+
+        if (res && res.ok) {
           clearTimeout(slowTimer);
           setReady(true);
         } else {
